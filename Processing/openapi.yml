@@ -1,0 +1,58 @@
+openapi: 3.0.0
+servers: []
+info:
+  description: This API receives recording events from the mobile/web app 
+  version: "1.0.0"
+  title: Recording API
+  contact:
+    email: ayamamoto7@ymy.bcit.ca
+tags:
+  - name: frontend
+    description: Operations available to the frontend app
+paths:
+  /stats:
+    get:
+      summary: Get the event stats
+      operationId: app.getStats
+      description: Get Income and Expense proccessed statistics
+      responses:
+        '200':
+          description: Successfully returned a stats object
+          content:
+            application/json:
+              schema:
+                type: object
+                items:
+                  $ref: '#/components/schemas/RecordStats'
+        '400':
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+
+components:
+  schemas:
+    RecordStats:
+      type: object
+      required:
+        - num_income_records
+        - num_expense_records
+        - total_income
+        - total_expense
+      properties:
+        num_income_records:
+          type: integer
+          example: 10
+        num_expense_records:
+          type: integer
+          example: 10
+        total_income:
+          type: number
+          example: 10000.50
+        total_expense:
+          type: number
+          example: 9000.11

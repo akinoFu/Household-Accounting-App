@@ -1,0 +1,191 @@
+openapi: 3.0.0
+servers: []
+info:
+  description: This API receives recording events from the mobile/web app 
+  version: "1.0.0"
+  title: Recording API
+  contact:
+    email: ayamamoto7@ymy.bcit.ca
+tags:
+  - name: frontend
+    description: Operations available to the frontend app
+paths:
+  /income:
+    post:
+      tags:
+        - frontend
+      summary: adds an income record
+      operationId: app.addIncome
+      description: Adds an new income record to the system
+      responses:
+        '201':
+          description: item created
+        '400':
+          description: 'invalid input, object invalid'
+        '409':
+          description: an item already exists
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/IncomeInput'
+        description: Income to add
+    get:
+      tags:
+        - frontend
+      summary: Get an income record
+      operationId: app.getIncome
+      description: Get an new income record
+      parameters:
+        - name: timestamp
+          in: query
+          description: Limits the number of items on page
+          schema:
+            type: string
+            format: date-time
+            example: '2016-08-29T09:12:33.001Z'
+      responses:
+        '200':
+          description: Successfully returned a list of income events
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/IncomeInput'
+        '400':
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+        
+  /expense:
+    post:
+      tags:
+        - frontend
+      summary: adds an exopense record
+      operationId: app.addExpense
+      description: Adds an new expense record to the system
+      responses:
+        '201':
+          description: item created
+        '400':
+          description: 'invalid input, object invalid'
+        '409':
+          description: an item already exists
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ExpenseInput'
+        description: Expense to add
+    get:
+      tags:
+        - frontend
+      summary: Get an expense record
+      operationId: app.getExpense
+      description: Get an expense record
+      parameters:
+        - name: timestamp
+          in: query
+          description: Limits the number of items on page
+          schema:
+            type: string
+            format: date-time
+            example: '2016-08-29T09:12:33.001Z'
+      responses:
+        '200':
+          description: Successfully returned a list of expense events
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ExpenseInput'
+        '400':
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+        
+components:
+  schemas:
+    IncomeInput:
+      type: object
+      required:
+        - user_id
+        - earnings
+        - deducations
+        - income_category
+        - income_note
+        - timestamp
+        - trace_id
+      properties:
+        user_id:
+          type: string
+          format: uuid
+          example: d290f1ee-6c54-4b01-90e6-d701748f0851
+        earnings:
+          type: number
+          example: 3000.55
+        deducations:
+          type: number
+          example: 100.5
+        income_category:
+          type: string
+          example: Regular income
+        income_note:
+          type: string
+          example: Salary for August
+        timestamp:
+          type: string
+          format: date-time
+          example: '2016-08-29T09:12:33.001Z'
+        trace_id:
+          type: string
+          format: uuid
+          example: d290f1ee-6c54-4b01-90e6-d701748f0851
+
+    ExpenseInput:
+      type: object
+      required:
+        - user_id
+        - expense
+        - tax
+        - expense_category
+        - expense_note
+        - timestamp
+        - trace_id
+      properties:
+        user_id:
+          type: string
+          format: uuid
+          example: d290f1ee-6c54-4b01-90e6-d701748f0851
+        expense:
+          type: number
+          example: 50
+        tax:
+          type: number
+          example: 5.5
+        expense_category:
+          type: string
+          example: Socializing
+        expense_note:
+          type: string
+          example: Have dinner with friends
+        timestamp:
+          type: string
+          format: date-time
+          example: '2016-08-29T09:12:33.001Z'
+        trace_id:
+          type: string
+          format: uuid
+          example: d290f1ee-6c54-4b01-90e6-d701748f0851
