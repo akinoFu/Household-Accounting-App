@@ -36,8 +36,8 @@ def addIncome(body):
     client = KafkaClient(hosts=f"{app_config['events']['hostname']}:{app_config['events']['port']}")
     topic = client.topics[str.encode(app_config['events']['topic'])]
     producer = topic.get_sync_producer()
-    msg = { "type": "bp",
-            "datetime" : datetime.datetime.now().strftime("%Y-%m-%dT%H:%M:%S"),
+    msg = { "type": "income",
+            "datetime" : datetime.datetime.now().strftime("%Y-%m-%dT%H:%M:%S.%fZ"),
             "payload": json.dumps(body) }
     msg_str = json.dumps(msg)
     producer.produce(msg_str.encode('utf-8'))
@@ -55,10 +55,11 @@ def addExpense(body):
     client = KafkaClient(hosts=f"{app_config['events']['hostname']}:{app_config['events']['port']}")
     topic = client.topics[str.encode(app_config['events']['topic'])]
     producer = topic.get_sync_producer()
-    msg = { "type": "bp",
-            "datetime" : datetime.datetime.now().strftime("%Y-%m-%dT%H:%M:%S"),
+    msg = { "type": "expense",
+            "datetime" : datetime.datetime.now().strftime("%Y-%m-%dT%H:%M:%S.%fZ"),
             "payload": json.dumps(body) }
     msg_str = json.dumps(msg)
+    producer.produce(msg_str.encode('utf-8'))
 
     outputInfoLog(trace_id,"addExpense", 201)
 

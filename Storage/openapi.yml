@@ -11,25 +11,25 @@ tags:
     description: Operations available to the frontend app
 paths:
   /income:
-    post:
-      tags:
-        - frontend
-      summary: adds an income record
-      operationId: app.addIncome
-      description: Adds an new income record to the system
-      responses:
-        '201':
-          description: item created
-        '400':
-          description: 'invalid input, object invalid'
-        '409':
-          description: an item already exists
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/IncomeInput'
-        description: Income to add
+    # post:
+    #   tags:
+    #     - frontend
+    #   summary: adds an income record
+    #   operationId: app.addIncome
+    #   description: Adds an new income record to the system
+    #   responses:
+    #     '201':
+    #       description: item created
+    #     '400':
+    #       description: 'invalid input, object invalid'
+    #     '409':
+    #       description: an item already exists
+    #   requestBody:
+    #     content:
+    #       application/json:
+    #         schema:
+    #           $ref: '#/components/schemas/IncomeInput'
+    #     description: Income to add
     get:
       tags:
         - frontend
@@ -64,25 +64,25 @@ paths:
                     type: string
         
   /expense:
-    post:
-      tags:
-        - frontend
-      summary: adds an exopense record
-      operationId: app.addExpense
-      description: Adds an new expense record to the system
-      responses:
-        '201':
-          description: item created
-        '400':
-          description: 'invalid input, object invalid'
-        '409':
-          description: an item already exists
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/ExpenseInput'
-        description: Expense to add
+    # post:
+    #   tags:
+    #     - frontend
+    #   summary: adds an exopense record
+    #   operationId: app.addExpense
+    #   description: Adds an new expense record to the system
+    #   responses:
+    #     '201':
+    #       description: item created
+    #     '400':
+    #       description: 'invalid input, object invalid'
+    #     '409':
+    #       description: an item already exists
+    #   requestBody:
+    #     content:
+    #       application/json:
+    #         schema:
+    #           $ref: '#/components/schemas/ExpenseInput'
+    #     description: Expense to add
     get:
       tags:
         - frontend
