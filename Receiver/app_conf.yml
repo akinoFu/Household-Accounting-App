@@ -3,3 +3,7 @@ eventstore1:
   url: http://localhost:8090/income
 eventstore2:
   url: http://localhost:8090/expense
+events:
+  hostname: acit3855-household-account-app.eastus.cloudapp.azure.com
+  port: 9092
+  topic: events

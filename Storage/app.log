@@ -1258,3 +1258,21 @@
 2022-02-18 23:44:57,452 - basicLogger - INFO - Query for expense records after 2022-02-18T23:43:55.304862Z returns 0 results
 2022-02-18 23:45:00,227 - basicLogger - INFO - Query for income records after 2022-02-18T23:43:53.064858Z returns 0 results
 2022-02-18 23:45:02,464 - basicLogger - INFO - Query for expense records after 2022-02-18T23:43:55.304862Z returns 0 results
+2022-02-18 23:54:54,745 - basicLogger - INFO - Connecting to DB. Hostname:acit3855-household-account-app.eastus.cloudapp.azure.com, Port: 3306
+2022-02-18 23:54:54,782 - basicLogger - INFO - Connecting to DB. Hostname:acit3855-household-account-app.eastus.cloudapp.azure.com, Port: 3306
+2022-02-18 23:54:55,744 - basicLogger - INFO - Connecting to DB. Hostname:acit3855-household-account-app.eastus.cloudapp.azure.com, Port: 3306
+2022-02-18 23:54:55,784 - basicLogger - INFO - Connecting to DB. Hostname:acit3855-household-account-app.eastus.cloudapp.azure.com, Port: 3306
+2022-02-18 23:54:59,662 - basicLogger - INFO - Query for income records after 2022-02-18T23:43:53.064858Z returns 0 results
+2022-02-18 23:55:01,901 - basicLogger - INFO - Query for expense records after 2022-02-18T23:43:55.304862Z returns 0 results
+2022-02-18 23:55:08,902 - basicLogger - INFO - Query for income records after 2022-02-18T23:43:53.064858Z returns 0 results
+2022-02-18 23:55:11,136 - basicLogger - INFO - Query for expense records after 2022-02-18T23:43:55.304862Z returns 0 results
+2022-02-18 23:55:13,932 - basicLogger - INFO - Query for income records after 2022-02-18T23:43:53.064858Z returns 0 results
+2022-02-18 23:55:16,155 - basicLogger - INFO - Query for expense records after 2022-02-18T23:43:55.304862Z returns 0 results
+2022-02-18 23:55:18,913 - basicLogger - INFO - Query for income records after 2022-02-18T23:43:53.064858Z returns 0 results
+2022-02-18 23:55:21,141 - basicLogger - INFO - Query for expense records after 2022-02-18T23:43:55.304862Z returns 0 results
+2022-02-18 23:55:23,918 - basicLogger - INFO - Query for income records after 2022-02-18T23:43:53.064858Z returns 0 results
+2022-02-18 23:55:26,141 - basicLogger - INFO - Query for expense records after 2022-02-18T23:43:55.304862Z returns 0 results
+2022-02-18 23:55:28,918 - basicLogger - INFO - Query for income records after 2022-02-18T23:43:53.064858Z returns 0 results
+2022-02-18 23:55:31,145 - basicLogger - INFO - Query for expense records after 2022-02-18T23:43:55.304862Z returns 0 results
+2022-02-18 23:55:33,928 - basicLogger - INFO - Query for income records after 2022-02-18T23:43:53.064858Z returns 0 results
+2022-02-18 23:55:36,154 - basicLogger - INFO - Query for expense records after 2022-02-18T23:43:55.304862Z returns 0 results
