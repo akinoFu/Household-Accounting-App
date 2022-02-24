@@ -1,0 +1,166 @@
+openapi: 3.0.0
+servers: []
+info:
+  description: This API provides audit info
+  version: "1.0.0"
+  title: Recording API
+  contact:
+    email: ayamamoto7@ymy.bcit.ca
+paths:
+  /income:
+    get:
+      tags:
+        - frontend
+      summary: Get an income record from history
+      operationId: app.getIncome
+      description: Gets income records from the event store
+      parameters:
+        - name: index
+          in: query
+          description: Gets the income at the index in the event store
+          schema:
+            type: integer
+            example: 100
+      responses:
+        '200':
+          description: Successfully returned an income events
+          content:
+            application/json:
+              schema:
+                type: object
+                items:
+                  $ref: '#/components/schemas/IncomeInput'
+        '400':
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+
+  /expense:
+    get:
+      tags:
+        - frontend
+      summary: Get an expense record from history
+      operationId: app.getExpense
+      description: Gets expense records from the event store
+      parameters:
+        - name: index
+          in: query
+          description: Gets the expense at the index in the event store
+          schema:
+            type: integer
+            example: 100
+      responses:
+        '200':
+          description: Successfully returned an expense events
+          content:
+            application/json:
+              schema:
+                type: object
+                items:
+                  $ref: '#/components/schemas/ExpenseInput'
+        '400':
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+        
+components:
+  schemas:
+    IncomeInput:
+      type: object
+      required:
+        - user_id
+        - earnings
+        - deducations
+        - income_category
+        - income_note
+        - timestamp
+        - trace_id
+      properties:
+        user_id:
+          type: string
+          format: uuid
+          example: d290f1ee-6c54-4b01-90e6-d701748f0851
+        earnings:
+          type: number
+          example: 3000.55
+        deducations:
+          type: number
+          example: 100.5
+        income_category:
+          type: string
+          example: Regular income
+        income_note:
+          type: string
+          example: Salary for August
+        timestamp:
+          type: string
+          format: date-time
+          example: '2016-08-29T09:12:33.001Z'
+        trace_id:
+          type: string
+          format: uuid
+          example: d290f1ee-6c54-4b01-90e6-d701748f0851
+
+    ExpenseInput:
+      type: object
+      required:
+        - user_id
+        - expense
+        - tax
+        - expense_category
+        - expense_note
+        - timestamp
+        - trace_id
+      properties:
+        user_id:
+          type: string
+          format: uuid
+          example: d290f1ee-6c54-4b01-90e6-d701748f0851
+        expense:
+          type: number
+          example: 50
+        tax:
+          type: number
+          example: 5.5
+        expense_category:
+          type: string
+          example: Socializing
+        expense_note:
+          type: string
+          example: Have dinner with friends
+        timestamp:
+          type: string
+          format: date-time
+          example: '2016-08-29T09:12:33.001Z'
+        trace_id:
+          type: string
+          format: uuid
+          example: d290f1ee-6c54-4b01-90e6-d701748f0851
