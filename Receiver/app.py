@@ -8,6 +8,8 @@ import logging
 import logging.config
 import yaml
 import uuid
+import datetime
+from pykafka import KafkaClient
 
 HEADER = { "Content-Type" : "application/json" }
 
@@ -30,20 +32,38 @@ def addIncome(body):
     """ Receives an adding income event """
     trace_id = str(uuid.uuid4())
     body['trace_id'] = trace_id
-    r = requests.post(f"{app_config['eventstore1']['url']}", data=json.dumps(body), headers=HEADER)
-    outputInfoLog(trace_id, "addIncome", r.status_code)
+    # r = requests.post(f"{app_config['eventstore1']['url']}", data=json.dumps(body), headers=HEADER)
+    client = KafkaClient(hosts=f"{app_config['events']['hostname']}:{app_config['events']['port']}")
+    topic = client.topics[str.encode(app_config['events']['topic'])]
+    producer = topic.get_sync_producer()
+    msg = { "type": "income",
+            "datetime" : datetime.datetime.now().strftime("%Y-%m-%dT%H:%M:%S.%fZ"),
+            "payload": json.dumps(body) }
+    msg_str = json.dumps(msg)
+    producer.produce(msg_str.encode('utf-8'))
 
-    return NoContent, r.status_code
+    outputInfoLog(trace_id, "addIncome", 201)
+
+    return NoContent, 201
 
 
 def addExpense(body):
     """ Receives an adding expense event """
     trace_id = str(uuid.uuid4())
     body['trace_id'] = trace_id 
-    r = requests.post(f"{app_config['eventstore2']['url']}", data=json.dumps(body), headers=HEADER)
-    outputInfoLog(trace_id,"addExpense", r.status_code)
+    # r = requests.post(f"{app_config['eventstore2']['url']}", data=json.dumps(body), headers=HEADER)
+    client = KafkaClient(hosts=f"{app_config['events']['hostname']}:{app_config['events']['port']}")
+    topic = client.topics[str.encode(app_config['events']['topic'])]
+    producer = topic.get_sync_producer()
+    msg = { "type": "expense",
+            "datetime" : datetime.datetime.now().strftime("%Y-%m-%dT%H:%M:%S.%fZ"),
+            "payload": json.dumps(body) }
+    msg_str = json.dumps(msg)
+    producer.produce(msg_str.encode('utf-8'))
 
-    return NoContent, r.status_code
+    outputInfoLog(trace_id,"addExpense", 201)
+
+    return NoContent, 201
 
 
 app = connexion.FlaskApp(__name__, specification_dir='')

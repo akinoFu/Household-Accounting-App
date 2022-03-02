@@ -1,56 +1,33 @@
 openapi: 3.0.0
 servers: []
 info:
-  description: This API receives recording events from the mobile/web app 
+  description: This API provides audit info
   version: "1.0.0"
   title: Recording API
   contact:
     email: ayamamoto7@ymy.bcit.ca
-tags:
-  - name: frontend
-    description: Operations available to the frontend app
 paths:
   /income:
-    # post:
-    #   tags:
-    #     - frontend
-    #   summary: adds an income record
-    #   operationId: app.addIncome
-    #   description: Adds an new income record to the system
-    #   responses:
-    #     '201':
-    #       description: item created
-    #     '400':
-    #       description: 'invalid input, object invalid'
-    #     '409':
-    #       description: an item already exists
-    #   requestBody:
-    #     content:
-    #       application/json:
-    #         schema:
-    #           $ref: '#/components/schemas/IncomeInput'
-    #     description: Income to add
     get:
       tags:
         - frontend
-      summary: Get an income record
+      summary: Get an income record from history
       operationId: app.getIncome
-      description: Get an new income record
+      description: Gets income records from the event store
       parameters:
-        - name: timestamp
+        - name: index
           in: query
-          description: Limits the number of items on page
+          description: Gets the income at the index in the event store
           schema:
-            type: string
-            format: date-time
-            example: '2016-08-29T09:12:33.001Z'
+            type: integer
+            example: 100
       responses:
         '200':
-          description: Successfully returned a list of income events
+          description: Successfully returned an income events
           content:
             application/json:
               schema:
-                type: array
+                type: object
                 items:
                   $ref: '#/components/schemas/IncomeInput'
         '400':
@@ -62,52 +39,50 @@ paths:
                 properties:
                   message:
                     type: string
-        
-  /expense:
-    # post:
-    #   tags:
-    #     - frontend
-    #   summary: adds an exopense record
-    #   operationId: app.addExpense
-    #   description: Adds an new expense record to the system
-    #   responses:
-    #     '201':
-    #       description: item created
-    #     '400':
-    #       description: 'invalid input, object invalid'
-    #     '409':
-    #       description: an item already exists
-    #   requestBody:
-    #     content:
-    #       application/json:
-    #         schema:
-    #           $ref: '#/components/schemas/ExpenseInput'
-    #     description: Expense to add
-    get:
-      tags:
-        - frontend
-      summary: Get an expense record
-      operationId: app.getExpense
-      description: Get an expense record
-      parameters:
-        - name: timestamp
-          in: query
-          description: Limits the number of items on page
-          schema:
-            type: string
-            format: date-time
-            example: '2016-08-29T09:12:33.001Z'
-      responses:
-        '200':
-          description: Successfully returned a list of expense events
+        '404':
+          description: Not Found
           content:
             application/json:
               schema:
-                type: array
+                type: object
+                properties:
+                  message:
+                    type: string
+
+  /expense:
+    get:
+      tags:
+        - frontend
+      summary: Get an expense record from history
+      operationId: app.getExpense
+      description: Gets expense records from the event store
+      parameters:
+        - name: index
+          in: query
+          description: Gets the expense at the index in the event store
+          schema:
+            type: integer
+            example: 100
+      responses:
+        '200':
+          description: Successfully returned an expense events
+          content:
+            application/json:
+              schema:
+                type: object
                 items:
                   $ref: '#/components/schemas/ExpenseInput'
         '400':
           description: Invalid request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+        '404':
+          description: Not Found
           content:
             application/json:
               schema:
