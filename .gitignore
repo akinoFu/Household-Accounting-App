@@ -3,3 +3,5 @@ venv/
 __pycache__/
 */app.log
 *.sqlite
+Storage/app_conf.yml
+
