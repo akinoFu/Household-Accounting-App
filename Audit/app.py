@@ -4,8 +4,6 @@ import json
 import logging
 import logging.config
 import yaml
-import uuid
-import datetime
 from pykafka import KafkaClient
 
 HEADER = { "Content-Type" : "application/json" }
@@ -49,6 +47,7 @@ def getIncome(index):
     logger.error("Could not find Income at index %d" % index)
     return { "message": "Not Found"}, 404
 
+
 def getExpense(index):
     """ Get Expense record in History """
     hostname = "%s:%d" % (app_config["events"]["hostname"],
@@ -78,4 +77,4 @@ app.add_api("openapi.yml", strict_validation=True, validate_responses=True)
 # app.run(port=8080, debug=True)
 
 if __name__ == "__main__":
-    app.run(port=8200, debug=True)
+    app.run(port=8110, debug=True)
