@@ -1,5 +1,5 @@
 venv/
 .history/
 __pycache__/
-*app.log
+*/app.log
 *.sqlite
