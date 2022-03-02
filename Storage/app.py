@@ -142,7 +142,7 @@ def process_messages():
             # Store the event1 (i.e., the payload) to the DB
            
             session = DB_SESSION()
-            print(type(payload))
+     
             data = Income(payload['user_id'],
                            payload['earnings'],
                            payload['deducations'],
