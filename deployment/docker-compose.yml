@@ -67,7 +67,10 @@ services:
   processing:
     image: processing:latest
     restart: always
-    network_mode: "host"
+    ports:
+      - 8100:8100
+    expose:
+      - '8100'
     depends_on:
       - storage
   audit_log:

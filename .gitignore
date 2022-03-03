@@ -2,7 +2,7 @@ venv/
 .history/
 __pycache__/
 */app.log
-*.sqlite
 Storage/app_conf.yml
 Audit/app_conf.yml
+Processing/app_conf.yml
 
