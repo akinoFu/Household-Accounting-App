@@ -50,6 +50,8 @@ services:
     restart: always
     ports:
       - 8080:8080
+    expose:
+      - '8080'
     depends_on:
       - kafka
   storage:
@@ -57,13 +59,14 @@ services:
     restart: always
     ports:
       - 8090:8090
+    expose:
+      - '8090'
     depends_on:
       - kafka
+      - db
   processing:
     image: processing:latest
     restart: always
-    ports:
-      - 8100:8100
     network_mode: "host"
     depends_on:
       - storage
@@ -72,6 +75,8 @@ services:
     restart: always
     ports:
       - 8110:8110
+    expose:
+      - '8110'
     depends_on:
       - kafka
 
