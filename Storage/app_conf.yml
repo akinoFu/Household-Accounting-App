@@ -2,10 +2,10 @@ version: 1
 datastore:
   user: user
   password: password
-  hostname: localhost
+  hostname: server-dns
   port: 3306
   db: events
 events:
-  hostname: localhost
+  hostname: server-dns
   port: 9092
   topic: events
