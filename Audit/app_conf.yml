@@ -1,5 +1,5 @@
 version: 1
 events:
-  hostname: localhost
+  hostname: server-dns
   port: 9092
   topic: events
