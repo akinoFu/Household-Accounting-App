@@ -5,6 +5,7 @@ import logging
 import logging.config
 import yaml
 from pykafka import KafkaClient
+from flask_cors import CORS, cross_origin
 
 HEADER = { "Content-Type" : "application/json" }
 
@@ -73,8 +74,9 @@ def getExpense(index):
     return { "message": "Not Found"}, 404
 
 app = connexion.FlaskApp(__name__, specification_dir='')
+CORS(app.app)
+app.app.config['CORS_HEADERS'] = 'Content-Type'
 app.add_api("openapi.yml", strict_validation=True, validate_responses=True)
-# app.run(port=8080, debug=True)
 
 if __name__ == "__main__":
     app.run(port=8110, debug=True)
