@@ -10,6 +10,7 @@ import yaml
 import uuid
 import datetime
 from pykafka import KafkaClient
+import time
 
 HEADER = { "Content-Type" : "application/json" }
 
@@ -33,8 +34,8 @@ def addIncome(body):
     trace_id = str(uuid.uuid4())
     body['trace_id'] = trace_id
     # r = requests.post(f"{app_config['eventstore1']['url']}", data=json.dumps(body), headers=HEADER)
-    client = KafkaClient(hosts=f"{app_config['events']['hostname']}:{app_config['events']['port']}")
-    topic = client.topics[str.encode(app_config['events']['topic'])]
+    # client = KafkaClient(hosts=f"{app_config['events']['hostname']}:{app_config['events']['port']}")
+    # topic = client.topics[str.encode(app_config['events']['topic'])]
     producer = topic.get_sync_producer()
     msg = { "type": "income",
             "datetime" : datetime.datetime.now().strftime("%Y-%m-%dT%H:%M:%S.%fZ"),
@@ -52,8 +53,8 @@ def addExpense(body):
     trace_id = str(uuid.uuid4())
     body['trace_id'] = trace_id 
     # r = requests.post(f"{app_config['eventstore2']['url']}", data=json.dumps(body), headers=HEADER)
-    client = KafkaClient(hosts=f"{app_config['events']['hostname']}:{app_config['events']['port']}")
-    topic = client.topics[str.encode(app_config['events']['topic'])]
+    # client = KafkaClient(hosts=f"{app_config['events']['hostname']}:{app_config['events']['port']}")
+    # topic = client.topics[str.encode(app_config['events']['topic'])]
     producer = topic.get_sync_producer()
     msg = { "type": "expense",
             "datetime" : datetime.datetime.now().strftime("%Y-%m-%dT%H:%M:%S.%fZ"),
@@ -71,4 +72,16 @@ app.add_api("openapi.yml", strict_validation=True, validate_responses=True)
 # app.run(port=8080, debug=True)
 
 if __name__ == "__main__":
+    hostname = "%s:%d" % (app_config["events"]["hostname"], app_config["events"]["port"])
+    retry_num = app_config["events"]["retry_num"]
+    for i in range(retry_num):
+        try:
+            logger.info(f"Trying to connect to Kafka...{i}")
+            client = KafkaClient(hosts=hostname)
+            topic = client.topics[str.encode(app_config["events"]["topic"])]
+            logger.info("Connected to Kafka successfully")
+            break
+        except:
+            logger.info("The connection to Kafka failed")
+            time.sleep(3)
     app.run(port=8080, debug=True)
