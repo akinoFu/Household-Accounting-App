@@ -23,6 +23,19 @@ with open("log_conf.yml", "r") as f:
 
 logger = logging.getLogger('basicLogger')
 
+hostname = "%s:%d" % (app_config["events"]["hostname"], app_config["events"]["port"])
+retry_num = app_config["events"]["retry_num"]
+for i in range(retry_num):
+    try:
+        logger.info(f"Trying to connect to Kafka...{i}")
+        client = KafkaClient(hosts=hostname)
+        topic = client.topics[str.encode(app_config["events"]["topic"])]
+        logger.info("Connected to Kafka successfully")
+        break
+    except:
+        logger.info("The connection to Kafka failed")
+        time.sleep(3)
+
 
 def outputInfoLog(trace_id, event_name, status_code):
     msg = f"Returned event {event_name} response (Id: {trace_id}) with status {status_code}"
@@ -72,16 +85,4 @@ app.add_api("openapi.yml", strict_validation=True, validate_responses=True)
 # app.run(port=8080, debug=True)
 
 if __name__ == "__main__":
-    hostname = "%s:%d" % (app_config["events"]["hostname"], app_config["events"]["port"])
-    retry_num = app_config["events"]["retry_num"]
-    for i in range(retry_num):
-        try:
-            logger.info(f"Trying to connect to Kafka...{i}")
-            client = KafkaClient(hosts=hostname)
-            topic = client.topics[str.encode(app_config["events"]["topic"])]
-            logger.info("Connected to Kafka successfully")
-            break
-        except:
-            logger.info("The connection to Kafka failed")
-            time.sleep(3)
     app.run(port=8080, debug=True)
