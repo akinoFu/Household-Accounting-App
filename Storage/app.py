@@ -13,6 +13,7 @@ from pykafka import KafkaClient
 from pykafka.common import OffsetType
 from threading import Thread
 import json
+from flask_cors import CORS, cross_origin
 
 
 with open("app_conf.yml", "r") as f:
@@ -35,50 +36,6 @@ Base.metadata.bind = DB_ENGINE
 DB_SESSION = sessionmaker(bind=DB_ENGINE)
 
 logger.info(f"Connecting to DB. Hostname:{conf_data['hostname']}, Port: {conf_data['port']}")
-
-# def addIncome(body):
-#     """ Receives an adding income event """
-    
-#     session = DB_SESSION()
-
-#     bp = Income(body['user_id'],
-#                 body['earnings'],
-#                 body['deducations'],
-#                 body['income_category'],
-#                 body['income_note'],
-#                 body['timestamp'],
-#                 body['trace_id'])
-
-#     session.add(bp)
-
-#     session.commit()
-#     session.close()
-
-#     outputInfoLog(body['trace_id'], 'addIncome')
-#     return NoContent, 201
-
-
-# def addExpense(body):
-#     """ Receives an adding expense event """
-
-#     session = DB_SESSION()
-
-#     bp = Expense(body['user_id'],
-#                 body['expense'],
-#                 body['tax'],
-#                 body['expense_category'],
-#                 body['expense_note'],
-#                 body['timestamp'],
-#                 body['trace_id'])
-
-#     session.add(bp)
-
-#     session.commit()
-#     session.close()
-
-#     outputInfoLog(body['trace_id'], 'addExpense')
-
-#     return NoContent, 201
 
 def getIncome(timestamp):
     """ Gets income records after the timestamp """
@@ -181,6 +138,8 @@ def process_messages():
 
 
 app = connexion.FlaskApp(__name__, specification_dir='')
+CORS(app.app)
+app.app.config['CORS_HEADERS'] = 'Content-Type'
 app.add_api("openapi.yml", strict_validation=True, validate_responses=True)
 
 if __name__ == "__main__":
