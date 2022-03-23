@@ -1,3 +1,4 @@
+from operator import truediv
 import connexion
 from connexion import NoContent
 import yaml
@@ -75,7 +76,13 @@ def getExpense(timestamp):
 def process_messages():
     """ Process event messages """
     hostname = "%s:%d" % (app_config["events"]["hostname"], app_config["events"]["port"])
-    client = KafkaClient(hosts=hostname)
+    while True:
+        try:
+            client = KafkaClient(hosts=hostname)
+            logger.info("Connected to Kafka successfully")
+            break
+        except:
+            logger.info("Couldn't connect to Kafka")
     topic = client.topics[str.encode(app_config["events"]["topic"])]
     
     # Create a consume on a consumer group, that only reads new messages
