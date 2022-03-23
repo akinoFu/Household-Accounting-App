@@ -30,7 +30,7 @@ DB_SESSION = sessionmaker(bind=DB_ENGINE)
 def getStats():
     """ Get proccessed result """
     trace_id = str(uuid.uuid4())
-    logger.info("Start Getting Statistics (ID: {trace_id})")
+    logger.info(f"Start Getting Statistics (ID: {trace_id})")
     session = DB_SESSION()
     record = session.query(Stats).order_by(Stats.last_updated.desc()).first()
     session.close()
