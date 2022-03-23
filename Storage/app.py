@@ -14,6 +14,7 @@ from pykafka import KafkaClient
 from pykafka.common import OffsetType
 from threading import Thread
 import json
+import time
 
 with open("app_conf.yml", "r") as f:
     app_config = yaml.safe_load(f.read())
@@ -76,14 +77,17 @@ def getExpense(timestamp):
 def process_messages():
     """ Process event messages """
     hostname = "%s:%d" % (app_config["events"]["hostname"], app_config["events"]["port"])
-    while True:
+    retry_num = app_config["events"]["retry_num"]
+    for i in range(retry_num):
         try:
+            logger.info(f"Trying to connect to Kafka...{i}")
             client = KafkaClient(hosts=hostname)
+            topic = client.topics[str.encode(app_config["events"]["topic"])]
             logger.info("Connected to Kafka successfully")
             break
         except:
-            logger.info("Couldn't connect to Kafka")
-    topic = client.topics[str.encode(app_config["events"]["topic"])]
+            logger.info("The connection to Kafka failed")
+            time.sleep(3)
     
     # Create a consume on a consumer group, that only reads new messages
     # (uncommitted messages) when the service re-starts (i.e., it doesn't
