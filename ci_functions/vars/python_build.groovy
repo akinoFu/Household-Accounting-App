@@ -9,7 +9,9 @@ def call(directoryName) {
 
         stages { 
             stage('Build') { 
-                steps { 
+                steps {
+                    sh 'echo directoryName'
+                    sh 'echo ${directoryName}'
                     sh 'pip install -r ${directoryName}/requirements.txt' 
                 } 
             }
