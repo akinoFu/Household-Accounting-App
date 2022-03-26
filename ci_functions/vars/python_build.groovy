@@ -25,7 +25,7 @@ def call(directoryName, dockerRepoName, imageName) {
                 steps { 
                     withCredentials([string(credentialsId: 'akino_dockerhub', variable: 'TOKEN')]) { 
                     sh "docker login -u 'akinofu' -p '$TOKEN' docker.io" 
-                    sh "docker build -t ${dockerRepoName}:latest --tag akinofu/${dockerRepoName}:${imageName} ." 
+                    sh "docker build -t ${dockerRepoName}:latest --tag akinofu/${dockerRepoName}:${imageName} ${directoryName}" 
                     sh "docker push akinofu/${dockerRepoName}:${imageName}" 
                     } 
                 } 
