@@ -20,7 +20,7 @@ def call(directoryName, dockerRepoName, imageName) {
             }
             stage('test') {
                 steps {
-                    sh "dcho ${env.GIT_BRANCH}"
+                    sh "echo ${env.GIT_BRANCH}"
                 }
             }
             stage('Package') { 
