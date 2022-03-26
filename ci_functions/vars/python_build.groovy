@@ -11,8 +11,8 @@ def call(directoryName) {
             stage('Build') { 
                 steps {
                     sh 'echo directoryName'
-                    sh 'echo ${directoryName}'
-                    sh 'pip install -r ${directoryName}/requirements.txt' 
+                    sh "echo ${directoryName}"
+                    sh "pip install -r ${directoryName}/requirements.txt"
                 } 
             }
             stage('Python Lint') { 
