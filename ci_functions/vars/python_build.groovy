@@ -12,7 +12,7 @@ def call(directoryName, dockerRepoName, imageName) {
                     sh "pip install -r ${directoryName}/requirements.txt"
                 } 
             }
-            stage('Python Lint') { 
+            stage('Lint') { 
                 steps { 
                     sh "pylint-fail-under --fail_under 5.0 ${directoryName}/*.py"
                 } 
@@ -40,15 +40,16 @@ def call(directoryName, dockerRepoName, imageName) {
             //         }
             //     }
             // }
-            // stage('Deliver') {
-            //     when {
-            //         expression {params.DEPLOY}
-            //     }
-            //     steps {
-            //         sh "docker stop ${dockerRepoName} || true && docker rm ${dockerRepoName} || true"
-            //         sh "docker run -d -p ${portNum}:${portNum} --name ${dockerRepoName} ${dockerRepoName}:latest"
-            //     }
-            // }
+            stage('Deploy') {
+                when {
+                    expression {params.DEPLOY}
+                }
+                steps {
+                    sh "echo Deploy-stage"
+//                     sh "docker stop ${dockerRepoName} || true && docker rm ${dockerRepoName} || true"
+//                     sh "docker run -d -p ${portNum}:${portNum} --name ${dockerRepoName} ${dockerRepoName}:latest"
+                }
+            }
 
         } 
     }
