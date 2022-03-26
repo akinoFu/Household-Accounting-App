@@ -1,5 +1,5 @@
 // def call(dockerRepoName, imageName, portNum) {
-def call() {
+def call(directoryName) {
     pipeline { 
         agent any
 
@@ -10,7 +10,7 @@ def call() {
         stages { 
             stage('Build') { 
                 steps { 
-                    sh 'pip install -r requirements.txt' 
+                    sh 'pip install -r ${directoryName}/requirements.txt' 
                 } 
             }
             stage('Python Lint') { 

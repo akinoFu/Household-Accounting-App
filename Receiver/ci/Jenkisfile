@@ -1,2 +1,2 @@
 @Library('HouseholdAccountingApp_ci_functions@main') _
-python_build()
+python_build('Receiver')
