@@ -1,5 +1,5 @@
 // def call(dockerRepoName, imageName, portNum) {
-def call(directoryName) {
+def call(directoryName,dockerRepoName, imageName) {
     pipeline { 
         agent any
 
@@ -18,47 +18,18 @@ def call(directoryName) {
                     sh 'pylint-fail-under --fail_under 5.0 *.py' 
                 } 
             } 
-            // stage('Test and Coverage') { 
-            //     steps { 
-            //         script {
-            //             def files = findFiles(glob: 'test*.py')
-            //             for (file in files) {
-            //                 sh "coverage run --omit */site-packages/*,*/dist-packages/* ${file.path}"
-            //             }
-            //         }
-            //         sh 'coverage report' 
-            //     }
-            //     post { 
-            //         always {
-            //             script {
-            //                 def test_reports_exist = fileExists 'test-reports'
-            //                 if (test_reports_exist) {                        
-            //                     junit 'test-reports/*.xml'
-            //                 }
-            //                 def api_test_reports_exist = fileExists 'api-test-reports'
-            //                 if (api_test_reports_exist) {                        
-            //                     junit 'api-test-reports/*.xml'
-            //                 }
-            //                 def carlot_test_reports_exist = fileExists 'carlot-test-reports'
-            //                 if (carlot_test_reports_exist) {                        
-            //                     junit 'carlot-test-reports/*.xml'
-            //                 }
-            //             }
-            //         } 
-            //     } 
-            // }
-            // stage('Package') { 
-            //     when { 
-            //         expression { env.GIT_BRANCH == 'origin/main' } 
-            //     } 
-            //     steps { 
-            //         withCredentials([string(credentialsId: 'DockerHub', variable: 'TOKEN')]) { 
-            //         sh "docker login -u 'cherylk19' -p '$TOKEN' docker.io" 
-            //         sh "docker build -t ${dockerRepoName}:latest --tag cherylk19/${dockerRepoName}:${imageName} ." 
-            //         sh "docker push cherylk19/${dockerRepoName}:${imageName}" 
-            //         } 
-            //     } 
-            // }
+            stage('Package') { 
+                when { 
+                    expression { env.GIT_BRANCH == 'origin/main' } 
+                } 
+                steps { 
+                    withCredentials([string(credentialsId: 'akino_dockerhub', variable: 'TOKEN')]) { 
+                    sh "docker login -u 'akinofu' -p '$TOKEN' docker.io" 
+                    sh "docker build -t ${dockerRepoName}:latest --tag akinofu/${dockerRepoName}:${imageName} ." 
+                    sh "docker push akinofu/${dockerRepoName}:${imageName}" 
+                    } 
+                } 
+            }
             // stage('Zip Artifacts') { 
             //     steps { 
             //         sh 'zip app.zip *.py' 
