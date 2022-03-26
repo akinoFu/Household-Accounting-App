@@ -25,7 +25,7 @@ def call(directoryName, dockerRepoName, imageName) {
             }
             stage('Package') { 
                 when { 
-                    expression { env.GIT_BRANCH == 'origin/main' } 
+                    expression { env.GIT_BRANCH == 'main' } 
                 } 
                 steps { 
                     withCredentials([string(credentialsId: 'akino_dockerhub', variable: 'TOKEN')]) { 
