@@ -19,9 +19,9 @@ def call(directoryName,dockerRepoName, imageName) {
                 } 
             } 
             stage('Package') { 
-                when { 
-                    expression { env.GIT_BRANCH == 'origin/main' } 
-                } 
+                // when { 
+                //     expression { env.GIT_BRANCH == 'origin/main' } 
+                // } 
                 steps { 
                     withCredentials([string(credentialsId: 'akino_dockerhub', variable: 'TOKEN')]) { 
                     sh "docker login -u 'akinofu' -p '$TOKEN' docker.io" 
