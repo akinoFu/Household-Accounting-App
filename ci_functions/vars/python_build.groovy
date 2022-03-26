@@ -59,17 +59,17 @@ def call(directoryName) {
             //         } 
             //     } 
             // }
-            stage('Zip Artifacts') { 
-                steps { 
-                    sh 'zip app.zip *.py' 
-                }
-                post {
-                    always {
-                        archiveArtifacts artifacts: 'app.zip', onlyIfSuccessful: true
-                        //test
-                    }
-                }
-            }
+            // stage('Zip Artifacts') { 
+            //     steps { 
+            //         sh 'zip app.zip *.py' 
+            //     }
+            //     post {
+            //         always {
+            //             archiveArtifacts artifacts: 'app.zip', onlyIfSuccessful: true
+            //             //test
+            //         }
+            //     }
+            // }
             // stage('Deliver') {
             //     when {
             //         expression {params.DEPLOY}
