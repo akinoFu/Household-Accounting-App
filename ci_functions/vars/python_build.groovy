@@ -1,5 +1,5 @@
 // def call(dockerRepoName, imageName, portNum) {
-def call(directoryName,dockerRepoName, imageName) {
+def call(directoryName, dockerRepoName, imageName) {
     pipeline { 
         agent any
 
