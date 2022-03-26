@@ -17,7 +17,12 @@ def call(directoryName, dockerRepoName, imageName) {
                 steps { 
                     sh "pylint-fail-under --fail_under 5.0 ${directoryName}/*.py"
                 } 
-            } 
+            }
+            stage('test') {
+                steps {
+                    sh "dcho ${env.GIT_BRANCH}"
+                }
+            }
             stage('Package') { 
                 when { 
                     expression { env.GIT_BRANCH == 'origin/main' } 
