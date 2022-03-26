@@ -15,7 +15,7 @@ def call(directoryName,dockerRepoName, imageName) {
             }
             stage('Python Lint') { 
                 steps { 
-                    sh 'pylint-fail-under --fail_under 5.0 *.py' 
+                    sh "pylint-fail-under --fail_under 5.0 ${directoryName}/*.py"
                 } 
             } 
             stage('Package') { 
