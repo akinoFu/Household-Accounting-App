@@ -57,6 +57,10 @@ services:
       - 8080:8080
     expose:
       - '8080'
+    environment:
+      - TRGET_ENV=test
+    volumes:
+      - /home/azureuser/config/receiver:/config
     depends_on:
       - kafka
   storage:
@@ -66,17 +70,21 @@ services:
       - 8090:8090
     expose:
       - '8090'
+    environment:
+      - TRGET_ENV=test
+    volumes:
+      - /home/azureuser/config/storage:/config
     depends_on:
       - kafka
       - db
   processing:
     image: processing:latest
     restart: always
-    # ports:
-    #   - 8100:8100
-    # expose:
-    #   - '8100'
     network_mode: host
+    environment:
+      - TRGET_ENV=test
+    volumes:
+      - /home/azureuser/config/processing:/config
     depends_on:
       - storage
   audit_log:
@@ -86,6 +94,10 @@ services:
       - 8110:8110
     expose:
       - '8110'
+    environment:
+      - TRGET_ENV=test
+    volumes:
+      - /home/azureuser/config/audit_log:/config
     depends_on:
       - kafka
   dashboard:
