@@ -58,7 +58,7 @@ services:
     expose:
       - '8080'
     environment:
-      - TRGET_ENV=test
+      - TARGET_ENV=test
     volumes:
       - /home/azureuser/config/receiver:/config
       - /home/azureuser/logs:/logs
@@ -72,7 +72,7 @@ services:
     expose:
       - '8090'
     environment:
-      - TRGET_ENV=test
+      - TARGET_ENV=test
     volumes:
       - /home/azureuser/config/storage:/config
       - /home/azureuser/logs:/logs
@@ -84,7 +84,7 @@ services:
     restart: always
     network_mode: host
     environment:
-      - TRGET_ENV=test
+      - TARGET_ENV=test
     volumes:
       - /home/azureuser/config/processing:/config
       - /home/azureuser/logs:/logs
@@ -98,7 +98,7 @@ services:
     expose:
       - '8110'
     environment:
-      - TRGET_ENV=test
+      - TARGET_ENV=test
     volumes:
       - /home/azureuser/config/audit_log:/config
       - /home/azureuser/logs:/logs
