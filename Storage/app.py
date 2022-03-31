@@ -36,6 +36,9 @@ with open(log_conf_file, 'r') as f:
 
 logger = logging.getLogger('basicLogger')
 
+logger.info("App Conf File: %s" % app_conf_file)
+logger.info("Log Conf File: %s" % log_conf_file)
+
 conf_data = app_config["datastore"]
 # with open("app_conf.yml", "r") as f:
 #     app_config = yaml.safe_load(f.read())
@@ -47,16 +50,17 @@ conf_data = app_config["datastore"]
 
 # logger = logging.getLogger('basicLogger')
 
-def outputInfoLog(trace_id, event_name):
-    msg = f"Stored event {event_name} request with a trace id of {trace_id}"
-    logger.info(msg)
-
-
 DB_ENGINE = create_engine(f"mysql+pymysql://{conf_data['user']}:{conf_data['password']}@{conf_data['hostname']}:{conf_data['port']}/{conf_data['db']}")
 Base.metadata.bind = DB_ENGINE
 DB_SESSION = sessionmaker(bind=DB_ENGINE)
 
 logger.info(f"Connecting to DB. Hostname:{conf_data['hostname']}, Port: {conf_data['port']}")
+
+
+def outputInfoLog(trace_id, event_name):
+    msg = f"Stored event {event_name} request with a trace id of {trace_id}"
+    logger.info(msg)
+
 
 def getIncome(timestamp):
     """ Gets income records after the timestamp """
