@@ -13,6 +13,8 @@ from base import Base
 import uuid
 from flask_cors import CORS, cross_origin
 import os
+import sqlite3
+from pathlib import Path
 
 if "TARGET_ENV" in os.environ and os.environ["TARGET_ENV"] == "test":
     print("In Test Environment")
@@ -153,11 +155,32 @@ def init_scheduler():
     sched.start()
 
 
+def create_datastore():
+    filepath = Path(app_config['datastore']['filename'])
+    if not filepath.is_file():
+        conn = sqlite3.connect(app_config['datastore']['filename'])
+        c = conn.cursor()
+        c.execute('''
+                CREATE TABLE stats
+                (id INTEGER PRIMARY KEY ASC, 
+                num_income_records INTEGER NOT NULL,
+                num_expense_records INTEGER NOT NULL,
+                total_income FLOAT NOT NULL,
+                total_expense FLOAT NOT NULL,
+                income_last_updated VARCHAR(100) NOT NULL,
+                expense_last_updated VARCHAR(100) NOT NULL,
+                last_updated VARCHAR(100) NOT NULL)
+                ''')
+        conn.commit()
+        conn.close()
+
+
 app = connexion.FlaskApp(__name__, specification_dir='')
 CORS(app.app)
 app.app.config['CORS_HEADERS'] = 'Content-Type'
 app.add_api("openapi.yml", strict_validation=True, validate_responses=True)
 
 if __name__ == "__main__":
+    create_datastore()
     init_scheduler()
     app.run(port=8100, use_reloader=False)
