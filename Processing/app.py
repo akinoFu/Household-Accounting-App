@@ -157,7 +157,10 @@ def init_scheduler():
 
 def create_datastore():
     filepath = Path(app_config['datastore']['filename'])
-    if not filepath.is_file():
+    if filepath.is_file():
+        logger.info(f"{filepath} exists")
+    else:
+        logger.info(f"{filepath} does not exist.")
         conn = sqlite3.connect(app_config['datastore']['filename'])
         c = conn.cursor()
         c.execute('''
@@ -173,6 +176,8 @@ def create_datastore():
                 ''')
         conn.commit()
         conn.close()
+        logger.info(f"{filepath} created")
+
 
 
 app = connexion.FlaskApp(__name__, specification_dir='')
