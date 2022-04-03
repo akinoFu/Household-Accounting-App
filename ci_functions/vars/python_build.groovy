@@ -51,8 +51,8 @@ def call(directoryName, dockerRepoName) {
                 }
                 steps {
                     sshagent(credentials: ['akino-vm-key']) {
-                        sh "ssh -o StrictHostKeyChecking=no azureuser@acit3855-household-account-app.eastus.cloudapp.azure.com 'cd ~/acit3855-lab/deployment && docker-compose stop ${dockerRepoName}'"
-                        sh "ssh -o StrictHostKeyChecking=no azureuser@acit3855-household-account-app.eastus.cloudapp.azure.com 'docker rmi ${dockerRepoName}'"
+                        sh "ssh -o StrictHostKeyChecking=no azureuser@acit3855-household-account-app.eastus.cloudapp.azure.com 'cd ~/acit3855-lab/deployment && docker-compose stop ${dockerRepoName} && docker-compose rm -f ${dockerRepoName}'"
+                        sh "ssh -o StrictHostKeyChecking=no azureuser@acit3855-household-account-app.eastus.cloudapp.azure.com 'docker rmi -f ${dockerRepoName}'"
                         sh "ssh -o StrictHostKeyChecking=no azureuser@acit3855-household-account-app.eastus.cloudapp.azure.com 'cd ~/acit3855-lab/deployment && docker-compose up -d'"
                     }
                 }
