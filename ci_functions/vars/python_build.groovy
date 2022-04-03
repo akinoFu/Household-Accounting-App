@@ -23,9 +23,9 @@ def call(directoryName, dockerRepoName) {
                 } 
                 steps { 
                     withCredentials([string(credentialsId: 'akino_dockerhub', variable: 'TOKEN')]) { 
-                    sh "docker login -u 'akinofu' -p '$TOKEN' docker.io" 
-                    sh "docker build --tag akinofu/${dockerRepoName}:latest ${directoryName}" 
-                    sh "docker push akinofu/${dockerRepoName}:latest" 
+                        sh "docker login -u 'akinofu' -p '$TOKEN' docker.io" 
+                        sh "docker build --tag akinofu/${dockerRepoName}:latest ${directoryName}" 
+                        sh "docker push akinofu/${dockerRepoName}:latest" 
                     } 
                 } 
             }
@@ -50,10 +50,10 @@ def call(directoryName, dockerRepoName) {
                     expression {params.DEPLOY}
                 }
                 steps {
-                    sshagent(credentials: ['akino-vm-key']) {
+                    sshagent(credentials: ['akino-vm-key', string(credentialsId: 'akino_dockerhub', variable: 'TOKEN')]) {
                         sh "ssh -o StrictHostKeyChecking=no azureuser@acit3855-household-account-app.eastus.cloudapp.azure.com 'cd ~/acit3855-lab/deployment && docker-compose stop ${dockerRepoName} && docker-compose rm -f ${dockerRepoName}'"
                         sh "ssh -o StrictHostKeyChecking=no azureuser@acit3855-household-account-app.eastus.cloudapp.azure.com 'docker rmi -f ${dockerRepoName}'"
-                        sh "ssh -o StrictHostKeyChecking=no azureuser@acit3855-household-account-app.eastus.cloudapp.azure.com 'cd ~/acit3855-lab/deployment && docker-compose up -d'"
+                        sh "ssh -o StrictHostKeyChecking=no azureuser@acit3855-household-account-app.eastus.cloudapp.azure.com 'docker login -u 'akinofu' -p '$TOKEN' docker.io && cd ~/acit3855-lab/deployment && docker-compose up -d'"
                     }
                 }
             }
