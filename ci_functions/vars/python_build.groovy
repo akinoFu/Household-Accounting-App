@@ -46,16 +46,14 @@ def call(directoryName, dockerRepoName) {
             //     }
             // }
             stage('Deploy') {
-                def commands = "cd ~/acit3855-lab/deployment && \
-                                docker-compose stop ${dockerRepoName} && \
-                                docker rmi ${dockerRepoName} && \
-                                docker-compose up -d"
                 when {
                     expression {params.DEPLOY}
                 }
                 steps {
                     sshagent(credentials: ['akino-vm-key']) {
-                        sh "ssh -o StrictHostKeyChecking=no azureuser@acit3855-household-account-app.eastus.cloudapp.azure.com '${commands}'"
+                        sh "ssh -o StrictHostKeyChecking=no azureuser@acit3855-household-account-app.eastus.cloudapp.azure.com 'cd ~/acit3855-lab/deployment && docker-compose stop ${dockerRepoName}'"
+                        sh "ssh -o StrictHostKeyChecking=no azureuser@acit3855-household-account-app.eastus.cloudapp.azure.com 'docker rmi ${dockerRepoName}'"
+                        sh "ssh -o StrictHostKeyChecking=no azureuser@acit3855-household-account-app.eastus.cloudapp.azure.com 'cd ~/acit3855-lab/deployment && docker-compose up -d'"
                     }
                 }
             }
