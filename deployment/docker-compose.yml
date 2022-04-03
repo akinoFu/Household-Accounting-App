@@ -51,7 +51,7 @@ services:
     volumes: 
       - my-db:/var/lib/mysql
   receiver:
-    image: receiver:latest
+    image: akinofu/receiver:latest
     restart: always
     ports:
       - 8080:8080
@@ -65,7 +65,7 @@ services:
     depends_on:
       - kafka
   storage:
-    image: storage:latest
+    image: akinofu/storage:latest
     restart: always
     ports:
       - 8090:8090
@@ -80,7 +80,7 @@ services:
       - kafka
       - db
   processing:
-    image: processing:latest
+    image: akinofu/processing:latest
     restart: always
     network_mode: host
     environment:
@@ -92,7 +92,7 @@ services:
     depends_on:
       - storage
   audit_log:
-    image: audit_log:latest
+    image: akinofu/audit_log:latest
     restart: always
     ports:
       - 8110:8110
