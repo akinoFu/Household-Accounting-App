@@ -60,7 +60,7 @@ def call(directoryName, dockerRepoName) {
                         //                                                                                                         docker login -u 'akinofu' -p '$DOCKER_PASS' docker.io && \
                         //                                                                                                         docker-compose up -d'"
                         sh "ssh -o StrictHostKeyChecking=no azureuser@acit3855-household-account-app.eastus.cloudapp.azure.com 'cd ~/acit3855-lab/deployment && docker-compose stop ${dockerRepoName} && docker-compose rm -f ${dockerRepoName}'"
-                        sh "ssh -o StrictHostKeyChecking=no azureuser@acit3855-household-account-app.eastus.cloudapp.azure.com 'docker rmi -f ${dockerRepoName}'"
+                        sh "ssh -o StrictHostKeyChecking=no azureuser@acit3855-household-account-app.eastus.cloudapp.azure.com 'docker rmi -f akinofu/${dockerRepoName}'"
                         sh "ssh -o StrictHostKeyChecking=no azureuser@acit3855-household-account-app.eastus.cloudapp.azure.com 'docker login -u akinofu -p $DOCKER_PASS docker.io && cd ~/acit3855-lab/deployment && docker-compose up -d'"
                         // sh "ssh -o StrictHostKeyChecking=no azureuser@acit3855-household-account-app.eastus.cloudapp.azure.com 'cd ~/acit3855-lab/deployment && docker-compose up -d'"
                     }
