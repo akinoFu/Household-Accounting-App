@@ -42,7 +42,7 @@ def call(directoryName, dockerRepoName) {
                     SSH_CMD = "ssh -o StrictHostKeyChecking=no azureuser@acit3855-household-account-app.eastus.cloudapp.azure.com"
                 }
                 steps {
-                    sshagent(credentials: ['akino-vm-key']) 
+                    sshagent(credentials: ['akino-vm-key']) {
                         sh "${SSH_CMD} 'cd ~/acit3855-lab/deployment && \
                                         docker-compose stop ${dockerRepoName} && \
                                         docker-compose rm -f ${dockerRepoName}'"
@@ -50,6 +50,7 @@ def call(directoryName, dockerRepoName) {
                         sh "${SSH_CMD} 'docker login -u akinofu -p $DOCKER_PASS docker.io && \
                                         cd ~/acit3855-lab/deployment && \
                                         docker-compose up -d'"
+                    }
                 }
             }
         } 
