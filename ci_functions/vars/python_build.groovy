@@ -47,8 +47,8 @@ def call(directoryName, dockerRepoName) {
             // }
             stage('Deploy') {
                 def commands = "cd ~/acit3855-lab/deployment && \
-                                docker-compose down && \
-                                docker rmi $(docker images -q) && \
+                                docker-compose stop ${dockerRepoName} && \
+                                docker rmi ${dockerRepoName} && \
                                 docker-compose up -d"
                 when {
                     expression {params.DEPLOY}
