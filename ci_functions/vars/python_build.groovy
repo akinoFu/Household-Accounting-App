@@ -1,10 +1,9 @@
 def call(directoryName, dockerRepoName) {
     pipeline { 
         agent any
-
         parameters {
           booleanParam(defaultValue: false, description: 'Deploy the App', name: 'DEPLOY')
-        } 
+        }
 
         stages { 
             stage('Build') { 
@@ -49,11 +48,14 @@ def call(directoryName, dockerRepoName) {
                 when {
                     expression {params.DEPLOY}
                 }
+                environment {
+                    DOCKER_PASS = credentials('akino_dockerhub')
+                }
                 steps {
-                    sshagent(credentials: ['akino-vm-key', string(credentialsId: 'akino_dockerhub', variable: 'TOKEN')]) {
+                    sshagent(credentials: ['akino-vm-key']) {
                         sh "ssh -o StrictHostKeyChecking=no azureuser@acit3855-household-account-app.eastus.cloudapp.azure.com 'cd ~/acit3855-lab/deployment && docker-compose stop ${dockerRepoName} && docker-compose rm -f ${dockerRepoName}'"
                         sh "ssh -o StrictHostKeyChecking=no azureuser@acit3855-household-account-app.eastus.cloudapp.azure.com 'docker rmi -f ${dockerRepoName}'"
-                        sh "ssh -o StrictHostKeyChecking=no azureuser@acit3855-household-account-app.eastus.cloudapp.azure.com 'docker login -u 'akinofu' -p '$TOKEN' docker.io && cd ~/acit3855-lab/deployment && docker-compose up -d'"
+                        sh "ssh -o StrictHostKeyChecking=no azureuser@acit3855-household-account-app.eastus.cloudapp.azure.com 'docker login -u 'akinofu' -p '$DOCKER_PASS' docker.io && cd ~/acit3855-lab/deployment && docker-compose up -d'"
                     }
                 }
             }
