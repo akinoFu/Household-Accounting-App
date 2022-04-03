@@ -28,10 +28,20 @@ def call(directoryName, dockerRepoName) {
                     } 
                 } 
             }
-            // stage ("CheckDIGEST") {
-            //     steps {
-            //         sh "docker image inspect -f '{{ .RepoDigests }}' akinofu/${dockerRepoName}:latest"
-            //         // sh "docker rmi akinofu/${dockerRepoName}:latest"
+            stage ("Cleanup") {
+                steps {
+                    sh "docker rmi akinofu/${dockerRepoName}:latest"
+                }
+            }
+            // stage('Zip Artifacts') { 
+            //     steps { 
+            //         sh 'zip app.zip *.py' 
+            //     }
+            //     post {
+            //         always {
+            //             archiveArtifacts artifacts: 'app.zip', onlyIfSuccessful: true
+            //             //test
+            //         }
             //     }
             // }
             stage('Deploy') {
@@ -51,10 +61,8 @@ def call(directoryName, dockerRepoName) {
                         sh "${SSH_CMD} 'docker login -u akinofu -p $DOCKER_PASS docker.io && \
                                         cd ~/acit3855-lab/deployment && \
                                         docker-compose up -d'"
-                    }
                 }
             }
-
         } 
     }
 
