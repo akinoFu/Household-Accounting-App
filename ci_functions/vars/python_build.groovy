@@ -28,21 +28,10 @@ def call(directoryName, dockerRepoName) {
                     } 
                 } 
             }
-            stage ("CheckImageDIGEST") {
-                steps {
-                    sh "docker image inspect -f '{{ .RepoDigests }}' akinofu/${dockerRepoName}:latest"
-                    // sh "docker rmi akinofu/${dockerRepoName}:latest"
-                }
-            }
-            // stage('Zip Artifacts') { 
-            //     steps { 
-            //         sh 'zip app.zip *.py' 
-            //     }
-            //     post {
-            //         always {
-            //             archiveArtifacts artifacts: 'app.zip', onlyIfSuccessful: true
-            //             //test
-            //         }
+            // stage ("CheckDIGEST") {
+            //     steps {
+            //         sh "docker image inspect -f '{{ .RepoDigests }}' akinofu/${dockerRepoName}:latest"
+            //         // sh "docker rmi akinofu/${dockerRepoName}:latest"
             //     }
             // }
             stage('Deploy') {
