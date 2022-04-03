@@ -50,6 +50,7 @@ def call(directoryName, dockerRepoName) {
                 }
                 environment {
                     DOCKER_PASS = credentials('akino_dockerhub')
+                    SSH_CMD = "ssh -o StrictHostKeyChecking=no azureuser@acit3855-household-account-app.eastus.cloudapp.azure.com"
                 }
                 steps {
                     sshagent(credentials: ['akino-vm-key']) {
@@ -57,11 +58,14 @@ def call(directoryName, dockerRepoName) {
                         //                                                                                                         docker-compose stop ${dockerRepoName} && \
                         //                                                                                                         docker-compose rm -f ${dockerRepoName} && \
                         //                                                                                                         docker rmi -f ${dockerRepoName} && \
-                        //                                                                                                         docker login -u 'akinofu' -p '$DOCKER_PASS' docker.io && \
+                        //                                                                                                         docker login -u akinofu -p $DOCKER_PASS docker.io && \
                         //                                                                                                         docker-compose up -d'"
-                        sh "ssh -o StrictHostKeyChecking=no azureuser@acit3855-household-account-app.eastus.cloudapp.azure.com 'cd ~/acit3855-lab/deployment && docker-compose stop ${dockerRepoName} && docker-compose rm -f ${dockerRepoName}'"
-                        sh "ssh -o StrictHostKeyChecking=no azureuser@acit3855-household-account-app.eastus.cloudapp.azure.com 'docker rmi -f akinofu/${dockerRepoName}'"
-                        sh "ssh -o StrictHostKeyChecking=no azureuser@acit3855-household-account-app.eastus.cloudapp.azure.com 'docker login -u akinofu -p $DOCKER_PASS docker.io && cd ~/acit3855-lab/deployment && docker-compose up -d'"
+                        sh "${SSH_CMD} 'cd ~/acit3855-lab/deployment && \
+                                        docker-compose stop ${dockerRepoName} && \
+                                        docker-compose rm -f ${dockerRepoName}'"
+                        sh "${SSH_CMD} 'docker rmi -f akinofu/${dockerRepoName}'"
+                        sh "${SSH_CMD} 'docker login -u akinofu -p $DOCKER_PASS docker.io && \
+                                        cd ~/acit3855-lab/deployment && docker-compose up -d'"
                         // sh "ssh -o StrictHostKeyChecking=no azureuser@acit3855-household-account-app.eastus.cloudapp.azure.com 'cd ~/acit3855-lab/deployment && docker-compose up -d'"
                     }
                 }
