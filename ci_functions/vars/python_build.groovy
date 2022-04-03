@@ -28,9 +28,10 @@ def call(directoryName, dockerRepoName) {
                     } 
                 } 
             }
-            stage ("Cleanup") {
+            stage ("CheckImageDIGEST") {
                 steps {
-                    sh "docker rmi akinofu/${dockerRepoName}:latest"
+                    sh "docker image inspect -f '{{ .RepoDigests }}' akinofu/${dockerRepoName}:latest"
+                    // sh "docker rmi akinofu/${dockerRepoName}:latest"
                 }
             }
             // stage('Zip Artifacts') { 
@@ -53,20 +54,14 @@ def call(directoryName, dockerRepoName) {
                     SSH_CMD = "ssh -o StrictHostKeyChecking=no azureuser@acit3855-household-account-app.eastus.cloudapp.azure.com"
                 }
                 steps {
-                    sshagent(credentials: ['akino-vm-key']) {
-                        // sh "ssh -o StrictHostKeyChecking=no azureuser@acit3855-household-account-app.eastus.cloudapp.azure.com 'cd ~/acit3855-lab/deployment && \
-                        //                                                                                                         docker-compose stop ${dockerRepoName} && \
-                        //                                                                                                         docker-compose rm -f ${dockerRepoName} && \
-                        //                                                                                                         docker rmi -f ${dockerRepoName} && \
-                        //                                                                                                         docker login -u akinofu -p $DOCKER_PASS docker.io && \
-                        //                                                                                                         docker-compose up -d'"
+                    sshagent(credentials: ['akino-vm-key']) 
                         sh "${SSH_CMD} 'cd ~/acit3855-lab/deployment && \
                                         docker-compose stop ${dockerRepoName} && \
                                         docker-compose rm -f ${dockerRepoName}'"
                         sh "${SSH_CMD} 'docker rmi -f akinofu/${dockerRepoName}'"
                         sh "${SSH_CMD} 'docker login -u akinofu -p $DOCKER_PASS docker.io && \
-                                        cd ~/acit3855-lab/deployment && docker-compose up -d'"
-                        // sh "ssh -o StrictHostKeyChecking=no azureuser@acit3855-household-account-app.eastus.cloudapp.azure.com 'cd ~/acit3855-lab/deployment && docker-compose up -d'"
+                                        cd ~/acit3855-lab/deployment && \
+                                        docker-compose up -d'"
                     }
                 }
             }
