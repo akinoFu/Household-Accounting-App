@@ -50,9 +50,10 @@ def call(directoryName, dockerRepoName) {
                     expression {params.DEPLOY}
                 }
                 steps {
-                    sh "echo Deploy-stage"
-//                     sh "docker stop ${dockerRepoName} || true && docker rm ${dockerRepoName} || true"
-//                     sh "docker run -d -p ${portNum}:${portNum} --name ${dockerRepoName} ${dockerRepoName}:latest"
+                    sshagent(credentials: ['akino-vm-key']) {
+                        sh "ssh -o StrictHostKeyChecking=no azureuser@acit3855-household-account-app.eastus.cloudapp.azure.com uptime"
+                        sh "ssh -v azureuser@acit3855-household-account-app.eastus.cloudapp.azure.com"
+                    }
                 }
             }
 
