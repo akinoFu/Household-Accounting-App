@@ -42,6 +42,11 @@ HEADER = { "Content-Type" : "application/json" }
 # logger = logging.getLogger('basicLogger')
 
 
+def getHealth():
+    """ Return 200 for health check"""
+    return NoContent, 200
+
+
 def getIncome(index):
     """ Get Inome record in History """
     hostname = "%s:%d" % (app_config["events"]["hostname"],

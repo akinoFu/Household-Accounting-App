@@ -77,7 +77,16 @@ paths:
                 properties:
                   message:
                     type: string
-        
+
+  /health:
+    get:
+      summary: Get the status of the service
+      operationId: app.getHealth
+      description: Return status code 200
+      responses:
+        '200':
+          description: Successfully returned the status code 200
+
 components:
   schemas:
     IncomeInput:

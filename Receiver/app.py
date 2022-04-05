@@ -59,7 +59,10 @@ for i in range(retry_num):
         logger.info("The connection to Kafka failed")
         time.sleep(3)
 
-
+def getHealth():
+    """ Return 200 for health check"""
+    return NoContent, 200
+    
 def outputInfoLog(trace_id, event_name, status_code):
     msg = f"Returned event {event_name} response (Id: {trace_id}) with status {status_code}"
     logger.info(msg)

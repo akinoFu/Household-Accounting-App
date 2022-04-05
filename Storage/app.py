@@ -57,6 +57,10 @@ DB_SESSION = sessionmaker(bind=DB_ENGINE)
 logger.info(f"Connecting to DB. Hostname:{conf_data['hostname']}, Port: {conf_data['port']}")
 
 
+def getHealth():
+    """ Return 200 for health check"""
+    return NoContent, 200
+
 def outputInfoLog(trace_id, event_name):
     msg = f"Stored event {event_name} request with a trace id of {trace_id}"
     logger.info(msg)
