@@ -75,7 +75,7 @@ def populate_stats():
     """ Periodically update stats """
     trace_id = str(uuid.uuid4())
     logger.info(f"Start Periodic Processing (ID: {trace_id})")
-    
+    logger.info("Jenkins demo")
     stats = get_latest_processing_stats()
 
     income_latest_date = stats["income_last_updated"]
