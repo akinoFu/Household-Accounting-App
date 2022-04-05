@@ -1,9 +1,6 @@
 def call(directoryName, dockerRepoName) {
     pipeline { 
         agent any
-        parameters {
-          booleanParam(defaultValue: false, description: 'Deploy the App', name: 'DEPLOY')
-        }
 
         stages { 
             stage('Build') { 
@@ -34,9 +31,6 @@ def call(directoryName, dockerRepoName) {
                 }
             }
             stage('Deploy') {
-                when {
-                    expression {params.DEPLOY}
-                }
                 environment {
                     DOCKER_PASS = credentials('akino_dockerhub')
                     SSH_CMD = "ssh -o StrictHostKeyChecking=no azureuser@acit3855-household-account-app.eastus.cloudapp.azure.com"
