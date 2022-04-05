@@ -78,7 +78,6 @@ def addIncome(body):
             "payload": json.dumps(body) }
     msg_str = json.dumps(msg)
     producer.produce(msg_str.encode('utf-8'))
-    logger.info("test jenkins pipeline")
 
     outputInfoLog(trace_id, "addIncome", 201)
 
