@@ -1,0 +1,12 @@
+version: 1
+datastore:
+  filename: health.json
+  max: 10
+scheduler:
+  period_sec: 20
+eventstore:
+  timeout: 5
+  receiver: http://acit3855-household-account-app.eastus.cloudapp.azure.com:8080
+  storage: http://acit3855-household-account-app.eastus.cloudapp.azure.com:8090
+  processing: http://acit3855-household-account-app.eastus.cloudapp.azure.com:8100
+  audit: http://acit3855-household-account-app.eastus.cloudapp.azure.com:8110

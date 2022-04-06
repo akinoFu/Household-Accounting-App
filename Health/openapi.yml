@@ -1,0 +1,58 @@
+openapi: 3.0.0
+servers: []
+info:
+  description: This API receives recording events from the mobile/web app 
+  version: "1.0.0"
+  title: Recording API
+  contact:
+    email: ayamamoto7@ymy.bcit.ca
+tags:
+  - name: frontend
+    description: Operations available to the frontend app
+paths:
+  /health:
+    get:
+      summary: Get helth check results
+      operationId: app.getHealth
+      description: Get helth check results
+      responses:
+        '200':
+          description: Successfully returned a health object
+          content:
+            application/json:
+              schema:
+                type: object
+                items:
+                  $ref: '#/components/schemas/HealthCheck'
+        '400':
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+
+components:
+  schemas:
+    HealthCheck:
+      type: object
+      required:
+        - receiver
+        - storage
+        - processing
+        - audit
+      properties:
+        receiver:
+          type: string
+          example: "Running"
+        storage:
+          type: string
+          example: "Running"
+        processing:
+          type: string
+          example: "Running"
+        audit:
+          type: string
+          example: "Running"

@@ -112,6 +112,11 @@ services:
     depends_on:
       - "processing"
       - "audit_log"
+  health:
+    image: akinofu/health:latest
+    ports:
+      - "8120:8120"
+
 # Names our volume 
 volumes: 
   my-db:
