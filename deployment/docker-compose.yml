@@ -90,7 +90,6 @@ services:
     networks:
       - "api.network"
     restart: always
-    network_mode: host
     environment:
       - TARGET_ENV=test
     volumes:
