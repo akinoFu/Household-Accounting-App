@@ -53,6 +53,7 @@ DB_SESSION = sessionmaker(bind=DB_ENGINE)
 
 def getHealth():
     """ Return 200 for health check"""
+    logger.info("HEALTH CHECK - Return 200")
     return NoContent, 200
 
 

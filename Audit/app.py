@@ -44,6 +44,7 @@ HEADER = { "Content-Type" : "application/json" }
 
 def getHealth():
     """ Return 200 for health check"""
+    logger.info("HEALTH CHECK - Return 200")
     return NoContent, 200
 
 

@@ -61,6 +61,7 @@ for i in range(retry_num):
 
 def getHealth():
     """ Return 200 for health check"""
+    logger.info("HEALTH CHECK - Return 200")
     return NoContent, 200
     
 def outputInfoLog(trace_id, event_name, status_code):
