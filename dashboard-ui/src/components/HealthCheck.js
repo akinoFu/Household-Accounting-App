@@ -1,17 +1,17 @@
 import React, { useEffect, useState } from 'react'
 import '../App.css';
 
-export default function AppStats() {
+export default function HealthCheck() {
     const [isLoaded, setIsLoaded] = useState(false);
     const [stats, setStats] = useState({});
     const [error, setError] = useState(null)
 
 	const getStats = () => {
 	
-        fetch(`http://acit3855-household-account-app.eastus.cloudapp.azure.com/processing/stats`)
+        fetch(`http://acit3855-household-account-app.eastus.cloudapp.azure.com/health/health`)
             .then(res => res.json())
             .then((result)=>{
-				console.log("Received Stats")
+				console.log("Received Health Check")
                 setStats(result);
                 setIsLoaded(true);
             },(error) =>{
@@ -31,27 +31,35 @@ export default function AppStats() {
     } else if (isLoaded === true){
         return(
             <div>
-                <h1>Latest Stats</h1>
+                <h1>Health Check</h1>
                 <table className={"StatsTable"}>
 					<tbody>
 						<tr>
-                            <th></th>
-							<th>Income</th>
-							<th>Expense</th>
+							<th>Receiver:</th>
+							<td>{stats['receiver']}</td>
 						</tr>
 						<tr>
-							<th>Count</th>
-                            <td>{stats['num_income_records']}</td>
-							<td>{stats['num_expense_records']}</td>
+                            <th>Storage:</th>
+							<td>{stats['receiver']}</td>
+						</tr>
+						<tr>
+                            <th>Processing:</th>
+							<td>{stats['receiver']}</td>
+						</tr>
+						<tr>
+                            <th>Audit:</th>
+							<td>{stats['receiver']}</td>
 						</tr>
                         <tr>
-							<th>Total</th>
-                            <td>$ {stats['total_income']}</td>
-							<td>$ {stats['total_expense']}</td>
+                            <th>Last Update:</th>
+							<td>{stats['last_update']}</td>
 						</tr>
+						{/* <tr>
+							<td colspan="2">Max HR: {stats['max_bp_sys_reading']}</td>
+						</tr> */}
 					</tbody>
                 </table>
-                <h3>Last Updated: {stats['last_updated']}</h3>
+
 
             </div>
         )
