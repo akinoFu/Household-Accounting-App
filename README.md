@@ -1,1 +1,1 @@
-# acit3855-lab
+# Household Accouting App
