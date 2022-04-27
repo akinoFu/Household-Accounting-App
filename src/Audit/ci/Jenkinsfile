@@ -1,2 +1,2 @@
 @Library('HouseholdAccountingApp_ci_functions@main') _
-python_build('Storage', 'storage')
+python_build('src/Audit', 'audit_log')
