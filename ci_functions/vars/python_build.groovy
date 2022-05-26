@@ -33,7 +33,7 @@ def call(directoryName, dockerRepoName) {
             stage('Deploy') {
                 environment {
                     DOCKER_PASS = credentials('akino_dockerhub')
-                    SSH_CMD = "ssh -o StrictHostKeyChecking=no azureuser@acit3855-household-account-app.eastus.cloudapp.azure.com"
+                    SSH_CMD = "ssh -o StrictHostKeyChecking=no azureuser@<azure-vm-dns>"
                 }
                 steps {
                     sshagent(credentials: ['akino-vm-key']) {
