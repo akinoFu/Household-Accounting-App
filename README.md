@@ -4,6 +4,7 @@
 - Built as microservices architecture consisting of 10 services
 - Each developed service has a Jenkins pipeline and Dockerfile
 - Automatically deploy the service to Azure VM in every checkin using Jenkins Piplines
+![Alt text](https://i.ibb.co/M2pRhB6/household-accounting-app1.jpg)
 ## 2. Repository Directries
 | Dir Name | Description |
 | --------| --------|
