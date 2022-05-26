@@ -6,7 +6,7 @@ scheduler:
   period_sec: 20
 eventstore:
   timeout: 5
-  receiver: http://acit3855-household-account-app.eastus.cloudapp.azure.com:8080
-  storage: http://acit3855-household-account-app.eastus.cloudapp.azure.com:8090
-  processing: http://acit3855-household-account-app.eastus.cloudapp.azure.com:8100
-  audit: http://acit3855-household-account-app.eastus.cloudapp.azure.com:8110
+  receiver: http://<azure-vm-dns>:8080  # Replace the host dns
+  storage: http://<azure-vm-dns>:8090
+  processing: http://<azure-vm-dns>:8100
+  audit: http://<azure-vm-dns>:8110
