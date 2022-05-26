@@ -9,7 +9,7 @@ export default function EndpointAudit(props) {
     const [index, setIndex] = useState(null)
 
     const getAudit = () => {
-        fetch(`http://acit3855-household-account-app.eastus.cloudapp.azure.com/audit_log/${props.endpoint}?index=${rand_val}`)
+        fetch(`http://<azure-vm-dns>/audit_log/${props.endpoint}?index=${rand_val}`)	// Replace the server dns
             .then(res => res.json())
             .then((result)=>{
 				console.log("Received Audit Results for " + props.endpoint)
