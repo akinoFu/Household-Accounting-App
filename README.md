@@ -10,8 +10,8 @@
 | Dir Name | Description |
 | --------| --------|
 | ci_functions | Shared libraries for Jenkins pipelines of each service |
-| deployment | docker-compose.yml |
-| src |  Conttains source code for 6 services |
+| deployment | Stores docker-compose.yml |
+| src |  Contains source code for 6 services |
 ## 3. Requirements
 - An Azure VM with Docker installed 
 - Jenkins pipelines for 6 services: Audit, Health, Processing, Receiver, Storage and Dashboard UI
