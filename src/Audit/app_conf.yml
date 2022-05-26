@@ -1,5 +1,5 @@
 version: 1
 events:
-  hostname: server-dns.com
+  hostname: <azure-vm-dns>  # Replace the host dns
   port: 9092
   topic: events
