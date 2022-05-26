@@ -1,7 +1,7 @@
 # Household-Accounting-App
 ## 1. About
 - A school project associated with the Computer Information Technology Diploma program at British Columbia Institute of Technology (BC, Canada)
-- Built as microservices architecture consisting of 10 services
+- Built as microservices architecture consisting of 8 services
 - Each developed service has a Jenkins pipeline and Dockerfile
 - Automatically deploy the service to Azure VM in every checkin using Jenkins Piplines
 ![Alt text](https://i.ibb.co/M2pRhB6/household-accounting-app1.jpg)
