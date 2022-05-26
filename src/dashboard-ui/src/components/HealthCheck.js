@@ -8,7 +8,7 @@ export default function HealthCheck() {
 
 	const getStats = () => {
 	
-        fetch(`http://acit3855-household-account-app.eastus.cloudapp.azure.com/health/health`)
+        fetch(`http://<azure-vm-dns>/health/health`)	// Replace the server dns
             .then(res => res.json())
             .then((result)=>{
 				console.log("Received Health Check")
